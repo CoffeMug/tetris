@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -20,6 +21,7 @@ public class Board extends JPanel implements ActionListener {
 
     final int BoardWidth = 10;
     final int BoardHeight = 22;
+    int timerUnit = 400;
 
     Timer timer;
     boolean isFallingFinished = false;
@@ -29,6 +31,7 @@ public class Board extends JPanel implements ActionListener {
     int curX = 0;
     int curY = 0;
     JLabel statusbar;
+    JComboBox levels;
     Shape curPiece;
     Tetrominoes[] board;
 
@@ -38,10 +41,9 @@ public class Board extends JPanel implements ActionListener {
 
        setFocusable(true);
        curPiece = new Shape();
-       timer = new Timer(400, this);
-       timer.start(); 
-
+       levels = parent.getComboBox();
        statusbar =  parent.getStatusBar();
+      
        board = new Tetrominoes[BoardWidth * BoardHeight];
        addKeyListener(new TAdapter());
        clearBoard();  
@@ -73,6 +75,18 @@ public class Board extends JPanel implements ActionListener {
         clearBoard();
 
         newPiece();
+        
+        switch(levels.getSelectedIndex()){
+        case 0: timerUnit = 600;
+        			break;
+        case 1: timerUnit = 400;
+        			break;
+        case 2: timerUnit = 300;
+        			break;
+        case 3: timerUnit = 200;
+        			break;
+        }
+        timer = new Timer(timerUnit, this);
         timer.start();
     }
 
