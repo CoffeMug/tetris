@@ -17,42 +17,36 @@ public class Tetris extends JFrame implements ActionListener {
     JLabel statusbar;
     JComboBox difficultyList;
     JButton startButton;
-    JPanel startPanel;
+    GuidePanel guidePanel;
     Board board;
 
     public Tetris() {
-
         statusbar = new JLabel(" 0");
-        String[] difficultyLevels = {"easy", "normal", "hard", "crazy!"};
-
-        difficultyList = new JComboBox(difficultyLevels);
-        difficultyList.setSize(10, 10);
-        difficultyList.setSelectedIndex(1);
-        startPanel = new JPanel();
-        JButton startButton = new JButton("start!");
-        startButton.setActionCommand("start");
-        startButton.addActionListener(this);;
         add(statusbar, BorderLayout.SOUTH);
-        startPanel.add(difficultyList);
-        startPanel.add(startButton);
-        add(startPanel, BorderLayout.NORTH);
-        board = new Board(this);
-        add(board);
+        guidePanel = new GuidePanel(this);
+		guidePanel.startButton.setActionCommand("start");
+        guidePanel.startButton.addActionListener(this);
 
-        setSize(300, 600);
+        add(guidePanel, BorderLayout.WEST);
+        initBoard();
+	}
+
+	public JLabel getStatusBar() {
+		return statusbar;
+	}
+   
+	public JComboBox getComboBox(){
+		return difficultyList;
+	}
+
+    private void initBoard(){
+        board = new Board(this);
+        setSize(600, 1200);
         setTitle("Tetris");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-   }
+        add(board);
+	}
 
-   public JLabel getStatusBar() {
-       return statusbar;
-   }
-   
-   public JComboBox getComboBox(){
-	   return difficultyList;
-   }
-
-   
     public static void main(String[] args) {
 
         Tetris game = new Tetris();
@@ -61,9 +55,9 @@ public class Tetris extends JFrame implements ActionListener {
 
     } 
     public void actionPerformed(ActionEvent e) {
-    	if (e.getActionCommand() == "start"){
-    		board.start();
-    	}
+		if (e.getActionCommand() == "start"){
+			board.start();
+		}
     }
 
 }

@@ -7,43 +7,51 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.BorderLayout;
+
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import javax.swing.BorderFactory;
+import javax.swing.border.Border;
+
+
 
 import tetris.Shape.Tetrominoes;
 
 
 public class Board extends JPanel implements ActionListener {
 
-
-    final int BoardWidth = 10;
-    final int BoardHeight = 22;
+    final int BoardWidth = 20;
+    final int BoardHeight = 40;
     int timerUnit = 400;
 
     Timer timer;
     boolean isFallingFinished = false;
     boolean isStarted = false;
     boolean isPaused = false;
+    boolean initShape = false;
     int numLinesRemoved = 0;
     int curX = 0;
     int curY = 0;
+    int nexX = 0;
+    int nexY = 0;
     JLabel statusbar;
     JComboBox levels;
     Shape curPiece;
+    Shape nexPiece;
     Tetrominoes[] board;
-
-
+    GuidePanel guidePanel;
 
     public Board(Tetris parent) {
-
        setFocusable(true);
        curPiece = new Shape();
-       levels = parent.getComboBox();
-       statusbar =  parent.getStatusBar();
-      
+       nexPiece = new Shape();
+       guidePanel = parent.guidePanel;
+       levels = guidePanel.getDifficultyList();
+       statusbar = parent.getStatusBar();
        board = new Tetrominoes[BoardWidth * BoardHeight];
        addKeyListener(new TAdapter());
        clearBoard();  
@@ -61,7 +69,7 @@ public class Board extends JPanel implements ActionListener {
 
     int squareWidth() { return (int) getSize().getWidth() / BoardWidth; }
     int squareHeight() { return (int) getSize().getHeight() / BoardHeight; }
-    Tetrominoes shapeAt(int x, int y) { return board[(y * BoardWidth) + x]; }
+	Tetrominoes shapeAt(int x, int y) { return board[(y * BoardWidth) + x]; }
 
 
     public void start()
@@ -76,7 +84,7 @@ public class Board extends JPanel implements ActionListener {
         clearBoard();
 
         newPiece();
-        
+          
         switch(levels.getSelectedIndex()){
         case 0: timerUnit = 600;
         			break;
@@ -133,6 +141,7 @@ public class Board extends JPanel implements ActionListener {
                            curPiece.getShape());
             }
         }
+
     }
 
     private void dropDown()
@@ -175,7 +184,24 @@ public class Board extends JPanel implements ActionListener {
 
     private void newPiece()
     {
-        curPiece.setRandomShape();
+        if (!initShape) {
+			curPiece.setRandomShape();
+			nexPiece.setRandomShape();
+            initShape = true;
+		}
+        else
+			{
+				curPiece.setShape(nexPiece.getShape());
+				nexPiece.setRandomShape();       
+			}
+
+        guidePanel.nexPiece=nexPiece ;
+        guidePanel.repaint();
+		//         nexX = guide.getX() + 10;
+        // nexY = guide.getY() + 10;
+
+       
+
         curX = BoardWidth / 2 + 1;
         curY = BoardHeight - 1 + curPiece.minY();
 

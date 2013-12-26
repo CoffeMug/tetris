@@ -1,3 +1,4 @@
 src/Tetris.java
-src/Shape.java
 src/Board.java
+src/Shape.java
+src/GuidePanel.java
