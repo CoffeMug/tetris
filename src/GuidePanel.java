@@ -23,11 +23,17 @@ public class GuidePanel extends JPanel {
 
     JComboBox difficultyList;
     JButton startButton;
-    int squareWidth = 10;
-    int squareHeight = 10;
-    int BoardHeight = 10;
-    int BoardTop = 10;
+    int squareWidth = 25;
+    int squareHeight = 25;
+    int PanelTop = 20;
     Shape nexPiece;  
+
+
+    final int PanelHeight = 20;
+
+    int nexX = 3;
+    int nexY = 3;
+
 
     public GuidePanel(Tetris parent) {
         String[] difficultyLevels = {"easy", "normal", "hard", "crazy!"};
@@ -38,7 +44,6 @@ public class GuidePanel extends JPanel {
         this.add(difficultyList);
         startButton = new JButton("start!");
         this.add(startButton);
-        //this.setOpaque(false);
         nexPiece = new Shape();
 	}
 
@@ -51,10 +56,10 @@ public class GuidePanel extends JPanel {
 		Dimension size = getSize();
 		if (nexPiece.getShape() != Tetrominoes.NoShape) {
             for (int i = 0; i < 4; ++i) {
-                int x = 1;
-                int y = 1;
+                int x = nexX + nexPiece.x(i);
+                int y = nexY - nexPiece.y(i);
                 drawSquare(g, 0 + x * squareWidth,
-                           BoardTop + (BoardHeight - y - 1) * squareHeight,
+                           PanelTop + (PanelHeight - y - 1) * squareHeight,
                            nexPiece.getShape());
             }
         }

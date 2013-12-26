@@ -36,8 +36,6 @@ public class Board extends JPanel implements ActionListener {
     int numLinesRemoved = 0;
     int curX = 0;
     int curY = 0;
-    int nexX = 0;
-    int nexY = 0;
     JLabel statusbar;
     JComboBox levels;
     Shape curPiece;
