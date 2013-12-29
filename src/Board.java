@@ -20,6 +20,7 @@ import javax.swing.border.Border;
 
 
 import tetris.Shape.Tetrominoes;
+import tetris.SoundEffect;
 
 
 public class Board extends JPanel implements ActionListener {
@@ -173,7 +174,7 @@ public class Board extends JPanel implements ActionListener {
             int y = curY - curPiece.y(i);
             board[(y * BoardWidth) + x] = curPiece.getShape();
         }
-
+        SoundEffect.BOOM.play();
         removeFullLines();
 
         if (!isFallingFinished)
