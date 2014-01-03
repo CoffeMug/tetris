@@ -75,7 +75,7 @@ public class Board extends JPanel implements ActionListener {
     {
     	this.requestFocus();
         if (isPaused)
-            return;
+            return
 
         isStarted = true;
         isFallingFinished = false;
