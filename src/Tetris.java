@@ -56,7 +56,7 @@ public class Tetris extends JFrame implements ActionListener {
     } 
     public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand() == "start"){
-			board.start();
+			board.start(); 
 		}
     }
 

@@ -11,4 +11,3 @@ fi
 
 javac @options @classes
 
-java -classpath bin/ tetris.Tetris
