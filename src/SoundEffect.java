@@ -14,7 +14,8 @@ import javax.sound.sampled.*;
  * 4. You can use the static variable SoundEffect.volume to mute the sound.
  */
 public enum SoundEffect {
-   BOOM("water.wav");
+   BOOM("water.wav"),
+   CHIME("chime.wav");
 
    // Nested class for specifying volume
    public static enum Volume {
@@ -29,7 +30,6 @@ public enum SoundEffect {
    // Constructor to construct each element of the enum with its own sound file.
    SoundEffect(String soundFileName) {
       try {
-    	 String majid = System.getProperty("java.class.path") ;
          // Use URL (instead of File) to read from disk and JAR.
          URL url = this.getClass().getClassLoader().getResource(soundFileName);
          // Set up an audio input stream piped from the sound file.

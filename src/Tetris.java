@@ -41,7 +41,7 @@ public class Tetris extends JFrame implements ActionListener {
 
     private void initBoard(){
         board = new Board(this);
-        setSize(600, 1200);
+        setSize(500, 1000);
         setTitle("Tetris");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         add(board);
@@ -56,7 +56,7 @@ public class Tetris extends JFrame implements ActionListener {
     } 
     public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand() == "start"){
-			board.start(); 
+			board.start();
 		}
     }
 

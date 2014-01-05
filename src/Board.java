@@ -25,15 +25,21 @@ import tetris.SoundEffect;
 
 public class Board extends JPanel implements ActionListener {
 
-    final int BoardWidth = 20;
-    final int BoardHeight = 40;
-    int timerUnit = 400;
+    final static int EASY = 600;
+    final static int NORMAL = 400;
+    final static int HARD = 300;
+    final static int CRAZY = 100;
+    final static int FASTMOVE = 25;
+	final int BoardWidth = 10;
+    final int BoardHeight = 25;
+    int timerUnit = NORMAL;
 
-    Timer timer;
+    Timer timer = new Timer(timerUnit, this);
     boolean isFallingFinished = false;
     boolean isStarted = false;
     boolean isPaused = false;
     boolean initShape = false;
+    private boolean fastFallDown = false;
     int numLinesRemoved = 0;
     int curX = 0;
     int curY = 0;
@@ -61,7 +67,7 @@ public class Board extends JPanel implements ActionListener {
             isFallingFinished = false;
             newPiece();
         } else {
-            oneLineDown();
+        	oneLineDown();
         }
     }
 
@@ -85,16 +91,16 @@ public class Board extends JPanel implements ActionListener {
         newPiece();
           
         switch(levels.getSelectedIndex()){
-        case 0: timerUnit = 600;
+        case 0: timerUnit = EASY;
         			break;
-        case 1: timerUnit = 400;
+        case 1: timerUnit = NORMAL;
         			break;
-        case 2: timerUnit = 300;
+        case 2: timerUnit = HARD;
         			break;
-        case 3: timerUnit = 200;
+        case 3: timerUnit = CRAZY;
         			break;
         }
-        timer = new Timer(timerUnit, this);
+        timer.setDelay(timerUnit);
         timer.start();
     }
 
@@ -254,12 +260,14 @@ public class Board extends JPanel implements ActionListener {
         }
 
         if (numFullLines > 0) {
+        	SoundEffect.CHIME.play();
             numLinesRemoved += numFullLines;
             statusbar.setText(String.valueOf(numLinesRemoved));
             isFallingFinished = true;
             curPiece.setShape(Tetrominoes.NoShape);
             repaint();
         }
+        
      }
 
     private void drawSquare(Graphics g, int x, int y, Tetrominoes shape)
@@ -313,7 +321,7 @@ public class Board extends JPanel implements ActionListener {
                  tryMove(curPiece, curX + 1, curY);
                  break;
              case KeyEvent.VK_DOWN:
-                 tryMove(curPiece.rotateRight(), curX, curY);
+            	 timer.setDelay(FASTMOVE);
                  break;
              case KeyEvent.VK_UP:
                  tryMove(curPiece.rotateLeft(), curX, curY);
@@ -321,14 +329,16 @@ public class Board extends JPanel implements ActionListener {
              case KeyEvent.VK_SPACE:
                  dropDown();
                  break;
-             case 'd':
-                 oneLineDown();
-                 break;
-             case 'D':
-                 oneLineDown();
-                 break;
              }
 
          }
+         
+         public void keyReleased(KeyEvent e) {
+        	 int keyCode = e.getKeyCode();
+        	 if (keyCode == KeyEvent.VK_DOWN){
+        		 timer.setDelay(timerUnit);
+        	 }
+         }
      }
+   
 }
