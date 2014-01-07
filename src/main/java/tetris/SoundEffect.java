@@ -33,7 +33,7 @@ public enum SoundEffect {
          File soundFile = null;
          InputStream inStream = null;
 		 AudioInputStream soundIn = null;
-         System.out.format("The url is:%s\n\n", url);
+
          if (url.toString().contains("jar")) {
 			 try {
 				 URLConnection uc = url.openConnection();
