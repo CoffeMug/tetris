@@ -17,11 +17,11 @@ import java.net.URISyntaxException;
  */
 public enum SoundEffect {
 	BOOM("water.wav"),
-		CHIME("chime.wav");
+	CHIME("chime.wav");
 
 	public static enum Volume {
-		MUTE, LOW, MEDIUM, HIGH
-			}
+        MUTE, LOW, MEDIUM, HIGH
+	}
 
 	public static Volume volume = Volume.LOW;
 
