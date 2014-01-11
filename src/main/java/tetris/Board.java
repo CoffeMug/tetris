@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
-
+import javax.swing.JOptionPane;
 
 
 import tetris.Shape.Tetrominoes;
@@ -215,6 +215,7 @@ public class Board extends JPanel implements ActionListener {
             timer.stop();
             isStarted = false;
             statusbar.setText("game over");
+			JOptionPane.showMessageDialog(null, "Game Over!");
         }
     }
 
